@@ -8,7 +8,7 @@ Book::Book(std::string title,  // title                    class_name::member_na
          ) :title{}, author{}, isbn{}, available{} { // member initializer list
    // TODO(student)
    // title cannot be empty and has to consist of letters, spaces, colons, and dashes
-   std::string badChars = ".><?,_1234567890;!@#$%^&*()[{}]\\|~`+=";
+   std::string badChars = ".><?',_1234567890;!@#$%^&*()[{}]\\|~`+=";
    if (title.empty()){
       throw std::invalid_argument("Invalid title");
    }
@@ -17,7 +17,7 @@ Book::Book(std::string title,  // title                    class_name::member_na
    }
 
    // author's name is not empty and consists of only letters
-   if (author_first_name.empty() || author_last_name.empty()){
+   if (author_first_name.empty() && author_last_name.empty()){
       throw std::invalid_argument("Invalid author");
    }
 
@@ -61,7 +61,7 @@ Book::Book(std::string title,  // title
          ) : title{}, author{}, isbn{}, available{} {
    // TODO(student)
 
-   std::string badChars = ".><?,_1234567890;!@#$%^&*()[{}]\\|~`+=";
+   std::string badChars = ".><?,'_1234567890;!@#$%^&*()[{}]\\|~`+=";
    if (title.empty()){
       throw std::invalid_argument("Invalid title");
    }
@@ -70,7 +70,7 @@ Book::Book(std::string title,  // title
    }
 
    // author's (AuthorName struct) name is not empty and consists of only letters
-   if (author.first_name.empty() || author.last_name.empty()){
+   if (author.first_name.empty() && author.last_name.empty()){
       throw std::invalid_argument("Invalid author");
    }
 
