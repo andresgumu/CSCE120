@@ -11,7 +11,7 @@ bool is_valid_range(long long a, long long b) {
 }
 
 // returns the 'p' if number is a plateau, 'b' if number is a basin, and 'n' if number is neither
-char classify_geo_type(long long number) {            // 1221
+char classify_geo_type(long long number) {            // 1221 (for testing)
 	// TODO(student): Initialize local variables
 	long long num = number;
 	int remainder {};
