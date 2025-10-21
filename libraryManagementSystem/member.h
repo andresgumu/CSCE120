@@ -15,12 +15,15 @@ class Member {
     int id;
 
  public:
-       Member(std::string first_name, std::string last_name, int id);
-       Member(MemberName name, int id);
-       MemberName get_name() const;
-       int get_id() const;
+       Member(std::string first_name, std::string last_name, int id); // paramtrized constructor
+       Member(MemberName name, int id); // paramtrized constructor
+       MemberName get_name() const; // access (getter)
+       int get_id() const; // access (getter)
 };
 
+// prints this string: "Member: NAME, id: ID"
+// where NAME is the first and last name of the member (separated by a space) and ID is an 
+// assigned ID. No end of line after ID.
 std::ostream& operator<<(std::ostream& os, const Member& member);
 
 #endif  // PROVIDED_MEMBER_H_

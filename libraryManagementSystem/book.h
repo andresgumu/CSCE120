@@ -17,23 +17,26 @@ class Book {
     bool available;
 
  public:
-    Book(std::string title,
+    Book(std::string title, // paramterized constructor (no default)
          std::string author_first_name,
          std::string author_last_name,
          std::string isbn,
          bool available = true);
-    Book(std::string title,
+    Book(std::string title, // constructor (no default)
          AuthorName author,
          std::string isbn,
          bool available = true);
-    std::string get_title() const;
-    AuthorName get_author() const;
-    std::string get_isbn() const;
-    bool is_available() const;
-    bool borrow_book();
-    bool return_book();
+    std::string get_title() const; // access (getter)
+    AuthorName get_author() const; // access (getter) 
+    std::string get_isbn() const; // access (getter) 
+    bool is_available() const; // access (getter) 
+    bool borrow_book(); // access (setter)
+    bool return_book(); // access (setter)
 };
 
+// prints this string: title: “TITLE” by AUTHOR, isbn: ISBN
+// where TITLE is the book title, AUTHOR is the first and last name of the author, and ISBN is 
+// the ISBN number of the book. No end-of-line after ISBN. TITLE must be surrounded by double quotes.
 std::ostream& operator<<(std::ostream& os, const Book& book);
 
 #endif  // PROVIDED_BOOK_H_
