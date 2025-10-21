@@ -1,14 +1,18 @@
 #include "member.h"
 
-Member::Member(std::string,  // firstName
-               std::string,  // last_name
-               int           // id
+Member::Member(std::string firstName,  // firstName
+               std::string last_name,  // last_name
+               int id          // id
             ) : name{}, id{} {
     // TODO(student)
+
+    // member's name is not empty and consists of only letters
+    
+    // member's ID is an integer greater than or equal to 1000
 }
 
-Member::Member(MemberName,  // name
-               int          // id
+Member::Member(MemberName name,  // name
+               int id          // id
                ) : name{}, id{} {
     // TODO(student)
 }

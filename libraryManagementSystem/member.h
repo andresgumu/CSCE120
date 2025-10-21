@@ -15,8 +15,8 @@ class Member {
     int id;
 
  public:
-       Member(std::string first_name, std::string last_name, int id); // paramtrized constructor
-       Member(MemberName name, int id); // paramtrized constructor
+       Member(std::string first_name, std::string last_name, int id); // parametrized constructor
+       Member(MemberName name, int id); // parametrized constructor
        MemberName get_name() const; // access (getter)
        int get_id() const; // access (getter)
 };
