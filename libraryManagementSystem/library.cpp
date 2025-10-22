@@ -72,27 +72,73 @@ bool Library::borrow_book(const std::string& isbn, int member_id, std::string& m
 }
 
 
-bool Library::return_book(const std::string&, std::string&) {
-   // TODO(student)
-   return false;
-}
-
-
-void Library::display_available_books(std::ostream&) {
-   // TODO(student)
-   // use the ostream parameter, NOT std::cout
-}
-
-
-void Library::display_library_members(std::ostream&) {
-   // TODO(student)
-   // use the ostream parameter, NOT std::cout
-}
-
-
-bool Library::is_book_available(const std::string&) {
+bool Library::return_book(const std::string& isbn, std::string& message) {
    // TODO(student)
 
+   // check if book is unavailable and if ISBN is in library catalog
+   // find location of book
+   size_t bookLocation = books.size(); // same logic as borrow_book section
+   for (size_t i = 0; i < books.size(); i++){
+      if (isbn == books[i].get_isbn()){
+         bookLocation = i; // store book location with matching isbn (parameter)
+         break;
+      }
+   }
+   if (bookLocation == books.size()){ // if bookLocation didn't get reassigned a value (didn't find it)
+      std::stringstream oss;
+      oss << "Book ISBN: " << isbn << " not found";
+      message = oss.str();
+      return false;
+   }
+   if (books[bookLocation].is_available()){ // throw error if book is available
+      std::stringstream oss;
+      oss << "Book ISBN: " << isbn << " still available (cannot be returned)";
+      message = oss.str();
+      return false;
+   }
+   // return book if conditions pass
+   books[bookLocation].return_book();
+   std::stringstream oss;
+   oss << "Book \"" << books[bookLocation].get_title() << "\"" << " returned";
+   message = oss.str();
 
    return true;
+}
+
+
+void Library::display_available_books(std::ostream& os) {
+   // TODO(student)
+   // use the ostream parameter, NOT std::cout
+   for (const auto& b: books){ // reference so that less memory is used
+      if (b.is_available()){
+         os << b << "\n";
+      }
+   }
+}
+
+
+void Library::display_library_members(std::ostream& os) {
+   // TODO(student)
+   // use the ostream parameter, NOT std::cout
+   for (const auto& m: members){ // reference so that less memory is used
+      os << m << "\n";
+   }
+}
+
+
+bool Library::is_book_available(const std::string& isbn) {
+   // TODO(student)
+   size_t bookLocation = books.size();
+   for (size_t i = 0; i < books.size(); i++){
+      if (isbn == books[i].get_isbn()){
+         bookLocation = i; // store book location with matching isbn (parameter)
+         break;
+      }
+   }
+   // check if book isnt found
+   if (bookLocation == books.size()){
+      return false;
+   }
+   // else return true if available, false if not
+   return books[bookLocation].is_available();
 }
