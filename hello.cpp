@@ -48,3 +48,30 @@ int main() {
     return 0;
 }
 
+class Complex {
+    private:
+        int r;
+        int i;
+    public:
+        Complex(){}
+        Complex(double r): r{r} {}
+        Complex(double r, double i): r{r}, i{i} {}
+
+        Complex operator+(const Complex& rhs){
+            return Complex(this->r + rhs.r, this->i + rhs.i);
+        };
+        Complex operator-(const Complex& rhs){
+            return Complex(this->r - rhs.r, this->i - rhs.i);
+        }
+        Complex operator/(const Complex& rhs){
+            return Complex(this->r / rhs.r, this->i / rhs.i);
+        }
+        Complex operator*(const Complex& rhs){
+            return Complex(this->r * rhs.r, this->i * rhs.i);
+        }
+        Complex operator==(const Complex& rhs){
+            return Complex(this->r == rhs.r, this->i == rhs.i);
+        }
+        // stream input and output (didn't have enough time)
+
+};
