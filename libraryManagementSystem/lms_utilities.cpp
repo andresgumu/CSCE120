@@ -42,18 +42,46 @@ int read_list_of_books(Library& library, const std::string& filename) { // loads
          booksAdded++;
 
       } catch (const std::exception& e){ // best practice to make the exception a reference and constant
-         // try code will not execute (book will be ignored), and it will move to the next input
+         // try code will not execute (book will be ignored), and it will silently move to the next input
       }
    }
 
    return booksAdded;
 }
 
-int read_list_of_members(Library&, const std::string&) { // loads member data from a txt file into a Library
+int read_list_of_members(Library& library, const std::string& filename) { // loads member data from a txt file into a Library
    // TODO(student)
 
-   
-   return 0;
+   std::ifstream iff(filename); // creates input file stream object named iff that opens the file specified inside the ()
+
+   // throw exception if file can't be opened
+   if (!iff.is_open()){
+      throw std::runtime_error("Cannot open " + filename);
+   }
+
+   // initialize variables
+   int numMembersAdded = 0;
+   int id = 1000;
+
+   std::string fullAuthor;
+   while (std::getline(iff, fullAuthor)){
+      // parse line
+      std::istringstream iss(fullAuthor);
+      std::string first_name, last_name;
+      iss >> first_name >> last_name;
+
+      // determine ID
+      MemberName name{first_name, last_name};
+      try{
+         Member member(name, id);
+         library.register_member(member);
+         numMembersAdded++;
+         id++;
+      } catch (const std::exception& e){
+         // catches exception and silently goes to next line
+      }
+   }
+   return numMembersAdded;
 }
 
 int read_list_of_borrowed_books(Library&, const std::string&) { // loads book borrowing data from a txt file into a Library
