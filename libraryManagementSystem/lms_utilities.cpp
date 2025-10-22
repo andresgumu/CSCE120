@@ -84,12 +84,51 @@ int read_list_of_members(Library& library, const std::string& filename) { // loa
    return numMembersAdded;
 }
 
-int read_list_of_borrowed_books(Library&, const std::string&) { // loads book borrowing data from a txt file into a Library
+int read_list_of_borrowed_books(Library& library, const std::string& filename) { // loads book borrowing data from a txt file into a Library
   // TODO(student)
-  return 0;
+
+  std::ifstream iff(filename);
+
+  // if file can't be opened throw error
+  if(!iff.is_open()){
+   throw std::runtime_error("Cannot open " + filename);
+  }
+
+  // initialize variables
+  std::string isbn, line, message;
+  int id = 0;
+  int booksBorrowed = 0;
+
+  // while loop to go through file and get stuff
+  while (std::getline(iff, line)){
+   std::istringstream iss(line);
+   iss >> isbn >> id;
+
+   // increment if borrow was successfull
+   if (library.borrow_book(isbn, id, message)){
+      booksBorrowed++;
+      }
+   }
+   return booksBorrowed;
 }
 
-int read_list_of_returned_books(Library&, const std::string&) { // loads book returning data from a txt file into a Library
+int read_list_of_returned_books(Library& library, const std::string& filename) { // loads book returning data from a txt file into a Library
    // TODO(student)
-   return 0;
+
+   std::ifstream iff(filename);
+
+   if (!iff.is_open()){
+      throw std::runtime_error("Cannot open " + filename);
+   }
+
+   std::string isbn, message;
+   int booksReturned = 0;
+   while (std::getline(iff, isbn)){
+
+      if(library.return_book(isbn, message)){
+         booksReturned++;
+      }
+   }
+
+   return booksReturned;
 }
