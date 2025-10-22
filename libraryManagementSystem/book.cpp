@@ -4,11 +4,11 @@ Book::Book(std::string title,  // title                    class_name::member_na
            std::string author_first_name,  // author_first_name
            std::string author_last_name,  // author_last_name
            std::string isbn,  // isbn
-           bool          // available
+           bool available          // available
          ) :title{}, author{}, isbn{}, available{} { // member initializer list
    // TODO(student)
    // title cannot be empty and has to consist of letters, spaces, colons, and dashes
-   std::string badChars = ".><?',_1234567890;!@#$%^&*()[{}]\\|~`+=";
+   std::string badChars = ".><?'_,1234567890;!@#$%^&*()[{}]\\|~`+=";
    if (title.empty()){
       throw std::invalid_argument("Invalid title");
    }
@@ -61,7 +61,7 @@ Book::Book(std::string title,  // title
          ) : title{}, author{}, isbn{}, available{} {
    // TODO(student)
 
-   std::string badChars = ".><?,'_1234567890;!@#$%^&*()[{}]\\|~`+=";
+   std::string badChars = ".><_?,'1234567890;!@#$%^&*()[{}]\\|~`+=";
    if (title.empty()){
       throw std::invalid_argument("Invalid title");
    }
