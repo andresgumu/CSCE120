@@ -4,6 +4,8 @@
 #include<string>
 #include<vector>
 
+// class definition for the cards used to play the game
+
 class Card{
     private:
         std::string rank; 

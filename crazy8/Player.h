@@ -5,6 +5,9 @@
 #include<vector>
 #include "Card.h"
 
+// the class definition for the players of the game, who may
+// be humans or AI
+
 class Player{
     private:
         bool isAI;
