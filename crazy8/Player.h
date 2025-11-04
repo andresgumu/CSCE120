@@ -11,7 +11,7 @@
 class Player{
     private:
         bool isAI;
-        std::vector<Card*> hand;
+        std::vector<Card*> hand; // vector of pointers that are of element Card
     public:
         Player(bool isAI);
         void addToHand(Card* c);
