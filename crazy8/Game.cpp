@@ -10,6 +10,19 @@ Game::Game(): players({}), suits({}), ranks({}),
 
 void Game::loadDeckFromFile(string filename){
     // TODO: initialize suits, ranks, deck, and drawPile from the given file
+
+    std::ifstream ifs(filename);
+    
+    if (!(ifs.is_open())){
+        throw std::runtime_error("file could not be opened");
+    }
+
+    // start reading lines
+    string line;
+    while (getline(ifs, line)){
+        
+    }
+
 }
 
 void Game::addPlayer(bool isAI){
