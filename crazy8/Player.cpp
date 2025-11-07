@@ -52,59 +52,105 @@ Card* Player::playCard(vector<string> const& suits, string& currentRank, string&
                 // ai implementation
                 
                 // ai will always play first card from its hand that it can legally play
-                if (currentRank == "8"){
-                    currentSuit = playedCard->getSuit();
-                }
-                // if played card isn't an 8, update current suit to the suit of the played card
-                else {
-                    currentSuit = playedCard->getSuit();
-                }
+                currentSuit = playedCard->getSuit();
 
                 // remove from player's hand
                 hand.erase(hand.begin() + i);
+
                 return playedCard;
-        
             }
         }
     }
     else{ // human implementation
+
+        // tell person current rank and suit and prompt to choose a card to play
         std::cout << "Your hand contains: " << getHandString() << std::endl;
         std::cout << "The next card played must be a " << currentRank << " or " << currentSuit << std::endl;
-        std::cout << "What card would you like to play? (enter \"draw card\" to draw a card)" << std::endl;
+        std::cout << "What would you like to play? (enter \"draw card\" to draw a card)" << std::endl;
 
         // enter while loop and break whenever valid input is given
-        bool invalidInput = true;
-        while(invalidInput){
+        while(true){
             string inputRank = "";
             string inputSuit = "";
-            std::cin >> inputRank >> inputSuit;
 
-            //-------check if it's a card that's available to use-------
-            if (!(inputRank == currentRank && inputSuit == currentSuit)){
-                
-            }
+            std::cin >> inputRank;
 
+            //------------handle "draw card"-----------------
+            if (inputRank == "draw"){
 
-            //-------check if it's a card that's available to use-------
-
-            // for loop to iterate through hand and check if card matches inputted card
-            for (size_t i = 0; i < getHandSize(); i++){
-                if (hand[i]->getRank() == inputRank && hand[i]->getSuit() == inputSuit){
-                    
+                // check if next word is card
+                std::string nextWord;
+                std::cin >> nextWord;
+                if (nextWord == "card"){
+                    return nullptr;
                 }
             }
 
-            //---------------check if card is an 8----------
+            // read suit if player chooses not to draw 
+            std::cin >> inputSuit;
+            Card* playedCard = nullptr;
+            size_t playedCardIndex = -1;
 
+            //---for loop to iterate through hand and check if card matches inputted card---
+            for (size_t i = 0; i < getHandSize(); i++){
+                if (hand[i]->getRank() == inputRank && hand[i]->getSuit() == inputSuit){
+                    playedCard = hand[i];
+                    playedCardIndex = i;
+                    break;
+                }
+            }
+            if (playedCard == nullptr){
+                std::cout << "That's not a card you have. Try again." << std::endl;
+                continue;
+            }
 
+            //-------check if it's a card that's available to use-------
+            if (!playedCard->canBePlayed(currentRank, currentSuit)){
+                std::cout << "You can't play that card. Try again." << std::endl;
+                continue;
+            }
+            
+            //-------card is valid, handle 8 logic -------------
+
+            // update current rank
+            currentRank = playedCard->getRank();
+
+            //check if card is an 8
+            if (inputRank == "8"){
+                std::cout << "What suit would you like to declare?" << std::endl;
+                
+                bool invalidSuit = true;
+                // check if suit chosen is valid
+                while (invalidSuit){
+                    string suitChosen = "";
+                    std::cin >> suitChosen;
+
+                    for (size_t i = 0; i < suits.size(); i++){
+                        if (suitChosen == suits[i]){
+                            currentSuit = suitChosen;
+                            invalidSuit = false;
+                            break;
+                        }
+                    }
+                    
+                    if (invalidSuit){
+                        std::cout << "That's not a suit in this deck. Try again." << std::endl;
+                    }
+
+                }
+            }
+            else { // handle non-8 logic
+                currentSuit = playedCard->getSuit();
+            }
+
+            // update hand and return played card
+            playedCard->play();
+            hand.erase(hand.begin() + playedCardIndex);
+
+            return playedCard;
         }
-
-        //---------------check if card is an 8----------
-
-
     }
+
     // if no card was played
     return nullptr;
-
-
 }
