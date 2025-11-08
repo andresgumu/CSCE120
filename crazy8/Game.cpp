@@ -114,6 +114,9 @@ void Game::loadDeckFromFile(string filename){
 
 void Game::addPlayer(bool isAI){
     // TODO: add a new player to the game
+    Player* newPlayer = new Player(isAI);
+    players.push_back(newPlayer);
+
 }
 
 
@@ -121,6 +124,27 @@ void Game::addPlayer(bool isAI){
 void Game::drawCard(Player* p){
     // TODO: Move the top card of the draw pile to Player p's hand
     // If the draw pile is empty, flip the discard pile to create a new one
+    if (drawPile.empty()){
+        if (discardPile.size() >= 2){
+            std::cout << "Draw pile empty, flipping the discard pile." << std::endl;
+
+            // flip rest of discard pile to turn into drawPile
+            drawPile.assign(discardPile.rbegin(),discardPile.rend());
+
+            // draw pile contains all discardPile cards except the most recently played
+            drawPile.erase(drawPile.begin());
+
+            // keep just most recently discarded (played) card
+            discardPile.erase(discardPile.begin(), discardPile.begin() + discardPile.size() -1);
+        }
+        else { // if discard pile has less than two cards
+            throw std::runtime_error("discard pile contains less than two cards, cannot flip.");
+        }
+    }
+    // move top card of draw pile into the player's hand
+    p->addToHand(drawPile.back());
+    drawPile.pop_back(); // remove card from the draw pile
+
 }
 
 
@@ -128,13 +152,71 @@ void Game::drawCard(Player* p){
 Card* Game::deal(int numCards){
     // TODO: Flip the top card of the draw pile to be the initial discard
     // then deal numCards many cards to each player
+
+    // start discard pile by discarding top (last) card of the draw pile
+    discardPile.push_back(drawPile.back());
+    drawPile.pop_back();
+
+    // iterate "numCards" amount of times to populate each player's hand
+    for (size_t i = 0; i < numCards; i++){
+        // deal cards from the top of the deck to player's hands one at a time
+        for (size_t j = 0; j < players.size(); j++){
+            drawCard(players[j]);
+        }
+    }
+
+    // return initially discarded card
+    return discardPile.back();
 }
 
 
 
 string Game::mostPlayedSuit(){
-    // TODO: Return the suit which has been played the most times
+    // TODO: Return the suit which has been PLAYED the most times
     // if there is a tie, choose any of the tied suits
+
+    // x number of suits
+    // x number of timesPlayed values
+
+    // iterate through suits, compare timesPlayed with next suit and return biggest
+    string maxSuit = suits.front(); // set max to first element of suits initially
+    int totalSuitPlayed = 0;
+    int totals = 0;
+
+    for (size_t j = 0; j < deck.size(); j++){
+        if (deck[j]->getSuit() == maxSuit){
+            totalSuitPlayed += deck[j]->getTimesPlayed();
+        }
+    }
+
+    // find 
+    for (size_t i = 1; i < suits.size(); i++){
+
+        maxSuit = suits[i];
+
+        for (size_t k = 0; k < deck.size(); k++){
+        // get total for that suit
+            if (deck[k]->getSuit() == maxSuit){
+                totals += deck[k]->getTimesPlayed();
+            }
+            if (totalSuitPlayed < totals){
+                
+            }
+
+    }
+
+
+
+
+
+
+        totalSuitPlayed = 0;
+        
+
+    }
+
+    return maxSuit;
+
 }
 
 
