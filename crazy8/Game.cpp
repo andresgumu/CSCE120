@@ -179,50 +179,47 @@ string Game::mostPlayedSuit(){
     // x number of timesPlayed values
 
     // iterate through suits, compare timesPlayed with next suit and return biggest
-    string maxSuit = suits.front(); // set max to first element of suits initially
-    int totalSuitPlayed = 0;
-    int totals = 0;
+    string mostPlayedSuit = suits.front(); // set max to first element of suits initially
+    int maxTotalPlayed = -1;
 
-    for (size_t j = 0; j < deck.size(); j++){
-        if (deck[j]->getSuit() == maxSuit){
-            totalSuitPlayed += deck[j]->getTimesPlayed();
+    // for loop through suit name
+    for (size_t i = 0; i < suits.size(); i++){
+
+        string currentSuit = suits[i];
+        int currentSuitTotal = 0;
+
+        // calc total for present suit
+        for (size_t j = 0; j < deck.size(); j++){
+            if (deck[j]->getSuit() == currentSuit){
+                currentSuitTotal += deck[j]->getTimesPlayed();
+            }
+        }
+
+        // compare to max
+        if(currentSuitTotal > maxTotalPlayed){
+            maxTotalPlayed = currentSuitTotal;
+            mostPlayedSuit = currentSuit;
         }
     }
 
-    // find 
-    for (size_t i = 1; i < suits.size(); i++){
-
-        maxSuit = suits[i];
-
-        for (size_t k = 0; k < deck.size(); k++){
-        // get total for that suit
-            if (deck[k]->getSuit() == maxSuit){
-                totals += deck[k]->getTimesPlayed();
-            }
-            if (totalSuitPlayed < totals){
-                
-            }
-
-    }
-
-
-
-
-
-
-        totalSuitPlayed = 0;
-        
-
-    }
-
-    return maxSuit;
-
+    return mostPlayedSuit;
 }
 
 
 
 int Game::runGame(){
     // TODO: Run the game and return the number of the winning player
+
+
+
+
+
+
+
+    
+
+    // return number of the winning player
+
 }
 
 
