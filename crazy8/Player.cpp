@@ -3,7 +3,7 @@
 #include "Player.h"
 using std::vector, std::string, std::size_t;
 
-Player::Player(bool isAI) : isAI(isAI), hand(hand) {
+Player::Player(bool isAI) : isAI(isAI), hand() {
 
 }
 

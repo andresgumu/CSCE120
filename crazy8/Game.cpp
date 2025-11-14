@@ -158,7 +158,7 @@ Card* Game::deal(int numCards){
     drawPile.pop_back();
 
     // iterate "numCards" amount of times to populate each player's hand
-    for (size_t i = 0; i < numCards; i++){
+    for (int i = 0; i < numCards; i++){
         // deal cards from the top of the deck to player's hands one at a time
         for (size_t j = 0; j < players.size(); j++){
             drawCard(players[j]);
@@ -210,16 +210,14 @@ string Game::mostPlayedSuit(){
 int Game::runGame(){
     // TODO: Run the game and return the number of the winning player
 
+    // get initial state from discard pile
+    Card*topCard = discardPile.back();
+    drawPile.pop_back();
+    discardPile.push_back(topCard);
 
+    // main game loop
 
-
-
-
-
-    
-
-    // return number of the winning player
-
+    return 0;
 }
 
 
