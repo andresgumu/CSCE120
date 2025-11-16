@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 //---------------default constructor-----------------------
-MyString::MyString() : m_data(nullptr),m_size(), m_capacity() {
+MyString::MyString() : m_data(nullptr),m_size(0), m_capacity(1) {
     m_data = new char[1]; // allocate memory for null terminator
     m_data[0] = '\0';
 };
@@ -104,7 +104,7 @@ void MyString::resize(size_t n){
     else if (n > this->m_size && n < this->m_capacity){
         // for loop to move null terminator
         for (size_t i = this->m_size; i < n; i++){
-            this->m_data[i] = ' ';
+            this->m_data[i] = '\0';
         }
         this->m_data[n] = '\0';
 
@@ -125,7 +125,7 @@ void MyString::resize(size_t n){
         }
 
         for (size_t k = oldSize; k < this->m_size; k++){
-            newData[k] = ' ';
+            newData[k] = '\0';
         }
         newData[n] = '\0';
         char* temp = this->m_data;
@@ -171,6 +171,10 @@ MyString& MyString::operator+= (const MyString& other){
 
     // store starting index
     size_t startIndex = this->m_size;
+
+    // save other string size before resizing
+    size_t otherLength = other.size();
+
     // calculate new total size
     size_t newSize = this->m_size + other.size();
 
@@ -178,7 +182,7 @@ MyString& MyString::operator+= (const MyString& other){
     resize(newSize);
 
     // copy other elements into m_data
-    for (size_t i = 0; i < other.size(); i++){
+    for (size_t i = 0; i < otherLength; i++){
         this->m_data[startIndex + i] = other.at(i);
     }
 

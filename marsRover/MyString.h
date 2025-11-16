@@ -12,8 +12,9 @@ class MyString {
         char* m_data;
         size_t m_size;
         size_t m_capacity;
-        static const size_t npos = -1; // member constant
     public:
+        static const size_t npos = -1; // member constant (publicly accessed)
+
         //----------Constructors-------------
         // default 
         MyString();
